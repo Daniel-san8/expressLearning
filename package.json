@@ -1,0 +1,11 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "description": "api express contact",
+  "main": "src/index.js",
+  "repository": "https://github.com/Daniel-san8/expressLearning.git",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
