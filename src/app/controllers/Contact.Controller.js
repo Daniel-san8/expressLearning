@@ -1,10 +1,17 @@
+const ContactsRepository = require("../repositories/ContactRepositories");
+
 class ContactController {
-    index (request, response) {
-        response.send("Send from contact controller")
+    async index (request, response) {
+        response.json(await ContactsRepository.findAll())
     }
 
-    show () {
+    async show (request, response) {
+        const { id } = request.params;
+        const contact = await ContactsRepository.findById(id);
 
+        if(!contact) return response.status(404).json({ error: "User not found" });
+
+        response.json(contact)
     }
 
     store () {
