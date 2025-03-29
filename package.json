@@ -5,7 +5,17 @@
   "main": "src/index.js",
   "repository": "https://github.com/Daniel-san8/expressLearning.git",
   "license": "MIT",
+  "scripts": {
+    "postinstall": "ls",
+    "dev": "npx nodemon src/index.js"
+  },
   "dependencies": {
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
+    "nodemon": "^3.1.9"
   }
 }
