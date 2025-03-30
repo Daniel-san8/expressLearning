@@ -27,22 +27,20 @@ let contacts = [
 ]
 
 class ContactRepository {
-    findAll () {
-        return new Promise ((resolve) => resolve(contacts));
+    async findAll (orderBy = "ASC") {
+        const direction = orderBy.toUpperCase() === "DESC" ? "DESC" : "ASC";
+        const rows = await db.query(`SELECT * FROM contacts ORDER BY name ${direction}`);
+        return rows;
     }
 
-    findById (id) {
-        const contact = contacts.find(contact => contact.id === id);
-
-        if(!contact) return false;
-        return new Promise((resolve) => resolve(contact));
+    async findById (id) {
+        const [ row ] = await db.query("SELECT * FROM contacts WHERE id = $1", [id]);
+        return row;
     }
 
-    findByEmail(email) {
-        const contactExists = contacts.find(contact => contact.email === email);
-        if(!contactExists) return false;
-
-        return new Promise(resolve => resolve(true))
+    async findByEmail(email) {
+        const [ row ] = await db.query("SELECT * FROM contacts WHERE email = $1", [email]);
+        return row;
     }
 
     async create(newUser) {
