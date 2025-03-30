@@ -55,6 +55,17 @@ class ContactRepository {
         contacts = contacts.filter(contact => contact.id !== id);
         return new Promise((resolve) => resolve(contacts));
     }
+
+    update(id, newUser) {
+        const updatedContact = {
+            id,
+            ...newUser
+        }
+
+        contacts = contacts.map(contact => contact.id === id ? updatedContact : contact)
+        return new Promise(resolve => resolve(updatedContact));
+    }
+    
 }
 
 module.exports = new ContactRepository();
