@@ -20,7 +20,7 @@ class ContactController {
         const contactExists = await ContactsRepository.findByEmail(email);
 
         if(contactExists) {
-            return response.status(400).json({ error: "O email já existe"} );
+            return response.status(400).json({ error: "O email já existe" });
         }
 
         const contact = await ContactsRepository.create({
