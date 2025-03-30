@@ -1,30 +1,30 @@
-const { uuid } = require("uuidv4");
+// const { uuid } = require("uuidv4");
 const db = require("../../database");
 // Fquery("SELECT * FROM contacts").then(console.log);
 
-let contacts = [
-    {
-        id: uuid(),
-        name: "Daniel Brigidia",
-        email: "danielgdt88@hotmail.com",
-        phone: "123456789",
-        category_id: uuid()
-    },
-    {
-        id: uuid(),
-        name: "Daniel Batista",
-        email: "danielgdt88@hotmail.com",
-        phone: "123456789",
-        category_id: uuid()
-    },
-    {
-        id: uuid(),
-        name: "DBB",
-        email: "danielgdt88@hotmail.com",
-        phone: "123456789",
-        category_id: uuid()
-    }
-]
+// let contacts = [
+//     {
+//         id: uuid(),
+//         name: "Daniel Brigidia",
+//         email: "danielgdt88@hotmail.com",
+//         phone: "123456789",
+//         category_id: uuid()
+//     },
+//     {
+//         id: uuid(),
+//         name: "Daniel Batista",
+//         email: "danielgdt88@hotmail.com",
+//         phone: "123456789",
+//         category_id: uuid()
+//     },
+//     {
+//         id: uuid(),
+//         name: "DBB",
+//         email: "danielgdt88@hotmail.com",
+//         phone: "123456789",
+//         category_id: uuid()
+//     }
+// ]
 
 class ContactRepository {
     async findAll (orderBy = "ASC") {
@@ -49,9 +49,14 @@ class ContactRepository {
         return row;
     }
 
-    delete (id) {
-        contacts = contacts.filter(contact => contact.id !== id);
-        return new Promise((resolve) => resolve(contacts));
+    async delete (id) {
+        const [ row ] = await db.query(`
+            DELETE FROM contacts
+            WHERE id = $1
+            RETURNING *`, 
+            [id]);
+
+        return row;
     }
 
     async update(id, newUser) {
