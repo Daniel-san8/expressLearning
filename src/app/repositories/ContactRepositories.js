@@ -36,6 +36,21 @@ class ContactRepository {
         return new Promise((resolve) => resolve(contact));
     }
 
+    findByEmail(email) {
+        const contactExists = contacts.find(contact => contact.email === email);
+        if(!contactExists) return false;
+
+        return new Promise(resolve => resolve(true))
+    }
+
+    create(newUser) {
+        contacts.push({
+            id: uuid(),
+            ...newUser,
+        });
+        return new Promise(resolve => resolve(newUser));
+    }
+
     delete (id) {
         contacts = contacts.filter(contact => contact.id !== id);
         return new Promise((resolve) => resolve(contacts));
