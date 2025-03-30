@@ -54,14 +54,15 @@ class ContactRepository {
         return new Promise((resolve) => resolve(contacts));
     }
 
-    update(id, newUser) {
-        const updatedContact = {
-            id,
-            ...newUser
-        }
+    async update(id, newUser) {
+        const [ row ] = await db.query(`
+            UPDATE contacts
+            SET name = $1, email = $2, phone = $3, category_id = $4
+            WHERE id = $5
+            RETURNING *`, 
+            [newUser.name, newUser.email, newUser.phone, newUser.category_id, id]);
 
-        contacts = contacts.map(contact => contact.id === id ? updatedContact : contact)
-        return new Promise(resolve => resolve(updatedContact));
+        return row;
     }
     
 }
